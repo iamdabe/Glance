@@ -1,0 +1,126 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Glance</title>
+    <meta name="viewport" content="width=device-width, user-scalable=no">
+
+    <link rel="stylesheet" type="text/css" href="_css/style.css" />
+    <link rel="stylesheet" type="text/css" href="_css/iconmoon.css" />
+    <link rel="stylesheet" type="text/css" href="_css/weather-icons.min.css" />
+    <link rel="stylesheet" type="text/css" href="_css/jquery.fullPage.css" />
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+
+    <script type="text/javascript" src="_lib/jquery.js"></script>
+    <script type="text/javascript" src="_lib/moment.min.js"></script>
+    <script type="text/javascript" src="_lib/jquery.fullPage.min.js"></script>
+    <script type="text/javascript" src="_js/Base.js"></script>
+
+</head>
+
+<body>
+    <script>
+        $(document).ready(function () {
+            init();
+        });
+    </script>
+    <div id="fullpage">
+        <div class="section">
+            <div id="home" class="slide glance">
+                <div class="overlay">
+                    <div id="clock">
+                        <ul class="dayofweek"></ul>
+                        <div class="time">.</div>
+                        <div class="date">.</div>
+                        <div class="events"></div>
+                    </div>
+                    <div id="weather">
+                        <div class="city">.</div>
+                        <div class="currenttemp">.</div>
+                        <ul class="forecast"></ul>
+                    </div>
+                </div>
+            </div>
+            <div id="strava" class="slide glance">
+                <div class="overlay">
+
+                    <div id="goal">
+                        <div class="title">Weekly Goal</div>
+                        <div class="distance">
+                            <div class="distancecovered"></div>
+                            <div class="distancegoal"></div>
+                        </div>
+                        <div class="graph"><div class="value"></div></div>
+                        <div class="activity"></div>
+                    </div>
+                    <div id="friendactivity">
+                        <div class="title">Friends Activity</div>
+                        <div class="activity"></div>
+                    </div>
+                </div>
+            </div>
+            <div id="settings" class="slide glance">
+                <div class="overlay">
+
+
+                    <ul class="nav">
+                        <li>General</li>
+                        <li>Home</li>
+                        <li>Strava</li>
+                        <li>Weather</li>
+                        <li>Feeds</li>
+                        <li>Connections</li>
+                    </ul>
+
+                    <div class="panel">
+
+                        <div class="onoffswitch">
+                            <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="myonoffswitch">
+                            <label class="onoffswitch-label" for="myonoffswitch">
+                                <span class="onoffswitch-inner"></span>
+                                <span class="onoffswitch-switch"></span>
+                            </label>
+                        </div>
+
+                        <h2>Connections</h2>
+                        <ul class="connections-list">
+                            <li class="ms clearfix">
+                                <i class="fa fa-windows"></i>
+                                <span>Microsoft Account</span>
+                                <a href="" class="connect"><i class="fa fa-windows"></i><em>Connect</em></a>
+                                <div class="info clearfix"></div>
+                            </li>
+                            <li class="strava clearfix">
+                                <i class="icon-strava"></i>
+                                <span>Strava</span>
+                                <a href="" class="connect"><i class="icon-strava"></i><em>Connect</em></a>
+                                <div class="info clearfix"></div>
+                            </li>
+                            <li class="flickr clearfix">
+                                <i class="fa fa-flickr"></i>
+                                <span>Flickr</span>
+                                <a href="" class="connect"><i class="fa fa-flickr"></i><em>Connect</em></a>
+                                <div class="info clearfix"></div>
+                            </li>
+                            <li class="instagram clearfix">
+                                <i class="fa fa-instagram"></i>
+                                <span>Instagram</span>
+                                <a href="" class="connect"><i class="fa fa-instagram"></i><em>Connect</em></a>
+                                <div class="info clearfix"></div>
+                            </li>
+                            <li class="twitter clearfix">
+                                <i class="fa fa-twitter"></i>
+                                <span>Twitter</span>
+                                <a href="" class="connect"><i class="fa fa-twitter"></i><em>Connect</em></a>
+                                <div class="info clearfix"></div>
+                            </li>
+
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

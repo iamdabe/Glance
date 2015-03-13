@@ -1,0 +1,477 @@
+* {
+    padding: 0;
+    margin: 0;
+}
+
+body, html {
+    width: 100%;
+    height: 100%;
+    font-family: 'HelveticaNeue-ThinExt';
+    font-size: 3.5vmin;
+    font-weight: normal;
+    color: #000;
+    -webkit-font-smoothing: antialiased;
+    text-transform: uppercase;
+}
+
+li {
+    list-style-type: none;
+}
+
+/* BACKGROUNDS */
+
+#home, .glance, .overlay {
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    position: relative;
+}
+
+#home {
+    background-image: url(https://ununsplash.imgix.net/uploads/1413259835094dcdeb9d3/6e609595?q=75&fm=jpg&s=6a4fc66161293fc4a43a6ca6f073d1c5);
+}
+
+#strava {
+    /*background-image: url(https://farm9.staticflickr.com/8677/15576902784_5f59612a07_k.jpg);*/
+    background-image: url('../_img/Mountain-Bike-New-Wallpaper.jpg');
+}
+
+#settings {
+    background: radial-gradient(#fff, #aaa);
+    background: -moz-radial-gradient(#fff, #aaa);
+    background: -ms-radial-gradient(#fff, #aaa);
+    background: -webkit-radial-gradient(#fff, #aaa);
+}
+
+.overlay {
+    background: -moz-linear-gradient(top, rgba(255,255,255,0) 0%, rgba(255,255,255,0.11) 32%, rgba(255,255,255,0.88) 69%, rgba(255,255,255,0.88) 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(255,255,255,0)), color-stop(32%,rgba(255,255,255,0.11)), color-stop(69%,rgba(255,255,255,0.88)), color-stop(100%,rgba(255,255,255,0.88))); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top, rgba(255,255,255,0) 0%,rgba(255,255,255,0.11) 32%,rgba(255,255,255,0.88) 69%,rgba(255,255,255,0.88) 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top, rgba(255,255,255,0) 0%,rgba(255,255,255,0.11) 32%,rgba(255,255,255,0.88) 69%,rgba(255,255,255,0.88) 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(top, rgba(255,255,255,0) 0%,rgba(255,255,255,0.11) 32%,rgba(255,255,255,0.88) 69%,rgba(255,255,255,0.88) 100%); /* IE10+ */
+    background: linear-gradient(to bottom, rgba(255,255,255,0) 0%,rgba(255,255,255,0.11) 32%,rgba(255,255,255,0.88) 69%,rgba(255,255,255,0.88) 100%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00ffffff', endColorstr='#e0ffffff',GradientType=0 ); /* IE6-9 */
+}
+
+/*HOME */
+#clock {
+    position: absolute;
+    top: 54%;
+    left: 2%;
+}
+
+    #clock .time, .currenttemp {
+        font-size: 20vmin;
+    }
+
+    #clock .dayofweek li {
+        padding-right: 5px;
+    }
+
+    #clock .time {
+        clear: both;
+    }
+
+    #clock .dayofweek, #clock .dayofweek li, .forecast, .forecast li {
+        display: block;
+        float: left;
+        list-style-type: none;
+    }
+
+        #clock .dayofweek li, .forecast li, .date, .city {
+            text-transform: uppercase;
+        }
+
+        #clock .dayofweek .current {
+            font-family: 'HelveticaNeue-Extended';
+        }
+
+    #clock .events {
+        padding-top: 2%;
+    }
+
+        #clock .events .title {
+            font-family: 'HelveticaNeue-Extended';
+        }
+
+        #clock .events .info {
+            font-size: 2.5vmin;
+        }
+
+
+#weather {
+    position: absolute;
+    top: 54%;
+    right: 2%;
+}
+
+    #weather .currenttemp i {
+        position: relative;
+        top: -0.2em;
+        font-size: 15vmin;
+    }
+
+    #weather .forecasttemp {
+        padding: 0 2%;
+    }
+
+    #weather .forecast i {
+        font-size: 4vmin;
+    }
+
+    #weather .forecast {
+        padding-top: 2%;
+    }
+
+        #weather .forecast li {
+            text-align: center;
+            padding-right: 5px;
+        }
+
+            #weather .forecast li span, #weather .forecast li i {
+                display: block;
+            }
+
+            #weather .forecast li i {
+                padding-bottom: 10px;
+                padding-top: 5px;
+            }
+
+    #weather span.forecasttemp {
+        display: inline-block;
+    }
+
+
+/* STRAVA */
+#strava #goal {
+    position: absolute;
+    top: 54%;
+    left: 2%;
+    width: 40%;
+}
+
+#goal .distance {
+    position: relative;
+}
+
+#goal .distancecovered {
+    font-size: 13vmin;
+    display: inline-block;
+    vertical-align: bottom;
+    margin-right: 10%;
+}
+
+    #goal .distancecovered span {
+        font-size: 5vmin;
+    }
+
+#goal .distancegoal {
+    font-size: 10vmin;
+    display: inline-block;
+    vertical-align: bottom;
+    position: absolute;
+    right: 0;
+    bottom: 0;
+}
+
+    #goal .distancegoal span {
+        font-size: 5vmin;
+    }
+
+
+#goal .graph {
+    clear: left;
+    height: 30px;
+    background: #d0d0d0;
+    border-radius: 10px;
+    width: 100%;
+}
+
+    #goal .graph .value {
+        background: #000;
+        border-radius: 10px;
+        height: 30px;
+        width: 0%;
+    }
+
+#strava .activity {
+    margin-top: 4%;
+}
+
+    #strava .activity .item {
+        margin-top: 1.5%;
+    }
+
+    #strava .activity .type {
+        float: left;
+        width: 8%;
+        padding: 1%;
+    }
+
+        #strava .activity .type i {
+            font-size: 4vmin;
+        }
+
+    #strava .activity .info {
+        float: left;
+        width: 90%;
+    }
+
+    #strava .activity .title {
+        font-family: 'HelveticaNeue-Extended';
+        float: left;
+        max-width: 90%;
+        overflow: hidden;
+        white-space: nowrap;
+        font-size: 2.5vmin;
+    }
+
+    #strava .activity .info li:first-child {
+        width: 37.5%;
+    }
+
+    #strava .activity .info li:last-child {
+        width: 8%;
+    }
+
+    #strava .activity .info li {
+        display: block;
+        float: left;
+        list-style-type: none;
+        margin-right: 1%;
+        width: 16.5%;
+        font-size: 2.25vmin;
+    }
+
+        #strava .activity .info li span {
+            margin-left: 1%;
+            font-size: 1.75vmin;
+        }
+
+    #strava .activity .info i {
+        padding-right: 2%;
+    }
+
+#strava #friendactivity {
+    position: absolute;
+    top: 54%;
+    right: 2%;
+    width: 40%;
+}
+
+
+
+#settings .connections-list {
+    display: block;
+    width: 100%;
+}
+
+    #settings .connections-list li {
+        display: block;
+        width: 100%;
+        margin-top: 1%;
+    }
+
+    #settings .connections-list i {
+        width: 5%;
+        display: block;
+        float: left;
+        margin-left: 1%;
+    }
+
+    #settings .connections-list span {
+        width: 40%;
+        display: block;
+        float: left;
+    }
+
+    #settings .connections-list a {
+        
+        font-family: 'HelveticaNeue-Extended';
+        width: 30%;
+        display: block;
+        float: right;
+        border: 2px solid #666;
+        padding: 0.5%;
+        text-decoration: none;
+        color: #000;
+        text-align: center;
+        font-size: 2.5vmin;
+    }
+    
+    #settings .connections-list em {
+        font-style:normal;
+    }
+    #settings .connections-list .info {
+        clear:both;
+        margin-left: 6%;
+        font-size: 2.5vmin;
+    }
+    /*#settings .connections-list .twitter a {
+        background:#55ACEE  !important;
+    }
+    #settings .connections-list .ms a {
+        background:#5a94f1  !important;
+    }
+    #settings .connections-list .strava a {
+        background:#fc4c02  !important;
+    }
+    #settings .connections-list .flickr a {
+        background:#fff  !important;
+        color: #0163dc;
+    }*/
+
+#settings .nav {
+    float: left;
+    width: 20%;
+    margin: 4% 2.5% 2.5% 2.5%;
+}
+
+#settings .panel {
+    float: left;
+    width: 70%;
+    margin: 4% 2.5% 2.5% 2.5%;
+}
+
+
+
+
+
+/* CLEARFIX  */
+.clearfix:after {
+    visibility: hidden;
+    display: block;
+    font-size: 0;
+    content: " ";
+    clear: both;
+    height: 0;
+}
+
+.clearfix {
+    display: inline-block;
+}
+
+/* Hides from IE-mac \*/
+* html .clearfix {
+    height: 1%;
+}
+
+.clearfix {
+    display: block;
+}
+/* End hide from IE-mac */
+
+
+/* FONTS */
+@font-face {
+    font-family: 'HelveticaNeue-ThinExt';
+    src: url('../_font/HelveticaNeue-ThinExt.eot?#iefix') format('embedded-opentype'), url('../_font/HelveticaNeue-ThinExt.otf') format('opentype'), url('../_font/HelveticaNeue-ThinExt.woff') format('woff'), url('../_font/HelveticaNeue-ThinExt.ttf') format('truetype'), url('../_font/HelveticaNeue-ThinExt.svg#HelveticaNeue-ThinExt') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+/*@font-face {
+  font-family: 'HelveticaNeue-LightExt';
+  src: url('../_font/HelveticaNeue-LightExt.eot?#iefix') format('embedded-opentype'),  url('../_font/HelveticaNeue-LightExt.otf')  format('opentype'),
+	     url('../_font/HelveticaNeue-LightExt.woff') format('woff'), url('../_font/HelveticaNeue-LightExt.ttf')  format('truetype'), url('../_font/HelveticaNeue-LightExt.svg#HelveticaNeue-LightExt') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}*/
+
+
+@font-face {
+    font-family: 'HelveticaNeue-Extended';
+    src: url('../_font/HelveticaNeue-Extended.eot?#iefix') format('embedded-opentype'), url('../_font/HelveticaNeue-Extended.otf') format('opentype'), url('../_font/HelveticaNeue-Extended.woff') format('woff'), url('../_font/HelveticaNeue-Extended.ttf') format('truetype'), url('../_font/HelveticaNeue-Extended.svg#HelveticaNeue-Extended') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+
+
+
+/* PROTO.IO ONOFF SWITCH */
+.onoffswitch {
+    position: relative;
+    width: 60px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+}
+
+.onoffswitch-checkbox {
+    display: none;
+}
+
+.onoffswitch-label {
+    display: block;
+    overflow: hidden;
+    cursor: pointer;
+    border: 2px solid #666;
+    border-radius: 0px;
+}
+
+.onoffswitch-inner {
+    display: block;
+    width: 200%;
+    margin-left: -100%;
+    -moz-transition: margin 0.2s ease-in 0s;
+    -webkit-transition: margin 0.2s ease-in 0s;
+    -o-transition: margin 0.2s ease-in 0s;
+    transition: margin 0.2s ease-in 0s;
+}
+
+    .onoffswitch-inner:before, .onoffswitch-inner:after {
+        display: block;
+        float: left;
+        width: 50%;
+        height: 20px;
+        padding: 0;
+        line-height: 16px;
+        font-size: 14px;
+        color: white;
+        font-family: Trebuchet, Arial, sans-serif;
+        font-weight: bold;
+        -moz-box-sizing: border-box;
+        -webkit-box-sizing: border-box;
+        box-sizing: border-box;
+        border: 2px solid transparent;
+        background-clip: padding-box;
+    }
+
+    .onoffswitch-inner:before {
+        content: "";
+        padding-left: 10px;
+        background-color: #000;
+        color: #FFFFFF;
+    }
+
+    .onoffswitch-inner:after {
+        content: "";
+        padding-right: 10px;
+        background-color: #666;
+        color: #333333;
+        text-align: right;
+    }
+
+.onoffswitch-switch {
+    display: block;
+    width: 20px;
+    margin: 0px;
+    background: #000000;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 40px;
+    -moz-transition: all 0.2s ease-in 0s;
+    -webkit-transition: all 0.2s ease-in 0s;
+    -o-transition: all 0.2s ease-in 0s;
+    transition: all 0.2s ease-in 0s;
+}
+
+.onoffswitch-checkbox:checked + .onoffswitch-label .onoffswitch-inner {
+    margin-left: 0;
+}
+
+.onoffswitch-checkbox:checked + .onoffswitch-label .onoffswitch-switch {
+    right: 0px;
+}
