@@ -32,8 +32,8 @@ li {
 }
 
 #strava {
-    /*background-image: url(https://farm9.staticflickr.com/8677/15576902784_5f59612a07_k.jpg);*/
-    background-image: url('../_img/Mountain-Bike-New-Wallpaper.jpg');
+    background-image: url(https://farm9.staticflickr.com/8677/15576902784_5f59612a07_k.jpg);
+    /*background-image: url('../_img/Mountain-Bike-New-Wallpaper.jpg');*/
 }
 
 #settings {
@@ -54,145 +54,152 @@ li {
 }
 
 /*HOME */
-#clock {
+#home .clock {
     position: absolute;
     top: 54%;
     left: 2%;
 }
 
-    #clock .time, .currenttemp {
+    #home .clock .time, .currenttemp {
         font-size: 20vmin;
     }
 
-    #clock .dayofweek li {
+    #home .clock .dayofweek li {
         padding-right: 5px;
     }
 
-    #clock .time {
+    #home .clock .time {
         clear: both;
     }
 
-    #clock .dayofweek, #clock .dayofweek li, .forecast, .forecast li {
+    #home .clock .dayofweek, #home .clock .dayofweek li, .forecast, .forecast li {
         display: block;
         float: left;
         list-style-type: none;
     }
 
-        #clock .dayofweek li, .forecast li, .date, .city {
+        #home .clock .dayofweek li, .forecast li, .date, .city {
             text-transform: uppercase;
         }
 
-        #clock .dayofweek .current {
+        #home .clock .dayofweek .current {
             font-family: 'HelveticaNeue-Extended';
         }
 
-    #clock .events {
+    #home .clock .events {
         padding-top: 2%;
     }
 
-        #clock .events .title {
+        #home .clock .events .title {
             font-family: 'HelveticaNeue-Extended';
         }
 
-        #clock .events .info {
+        #home .clock .events .info {
             font-size: 2.5vmin;
         }
 
 
-#weather {
+#home .weather {
     position: absolute;
     top: 54%;
     right: 2%;
 }
 
-    #weather .currenttemp i {
+    #home .weather .currenttemp i {
         position: relative;
         top: -0.2em;
         font-size: 15vmin;
     }
 
-    #weather .forecasttemp {
+    #home .weather .forecasttemp {
         padding: 0 2%;
     }
 
-    #weather .forecast i {
+    #home .weather .forecast i {
         font-size: 4vmin;
     }
 
-    #weather .forecast {
+    #home .weather .forecast {
         padding-top: 2%;
     }
 
-        #weather .forecast li {
+        #home .weather .forecast li {
             text-align: center;
             padding-right: 5px;
         }
 
-            #weather .forecast li span, #weather .forecast li i {
+            #home .weather .forecast li span, #home .weather .forecast li i {
                 display: block;
             }
 
-            #weather .forecast li i {
+            #home .weather .forecast li i {
                 padding-bottom: 10px;
                 padding-top: 5px;
             }
 
-    #weather span.forecasttemp {
+    #home .weather span.forecasttemp {
         display: inline-block;
     }
 
+/* PLEX */
+
+#plex .latest img {
+    width: 25%;
+    height:auto;
+    float: left;
+}
 
 /* STRAVA */
-#strava #goal {
+#strava .goal {
     position: absolute;
     top: 54%;
     left: 2%;
     width: 40%;
 }
 
-#goal .distance {
-    position: relative;
-}
-
-#goal .distancecovered {
-    font-size: 13vmin;
-    display: inline-block;
-    vertical-align: bottom;
-    margin-right: 10%;
-}
-
-    #goal .distancecovered span {
-        font-size: 5vmin;
+    #strava .goal .distance {
+        position: relative;
     }
 
-#goal .distancegoal {
-    font-size: 10vmin;
-    display: inline-block;
-    vertical-align: bottom;
-    position: absolute;
-    right: 0;
-    bottom: 0;
-}
-
-    #goal .distancegoal span {
-        font-size: 5vmin;
+    #strava .goal .distancecovered {
+        font-size: 13vmin;
+        display: inline-block;
+        vertical-align: bottom;
+        margin-right: 10%;
     }
 
+        #strava .goal .distancecovered span {
+            font-size: 5vmin;
+        }
 
-#goal .graph {
-    clear: left;
-    height: 30px;
-    background: #d0d0d0;
-    border-radius: 10px;
-    width: 100%;
-}
+    #strava .goal .distancegoal {
+        font-size: 10vmin;
+        display: inline-block;
+        vertical-align: bottom;
+        position: absolute;
+        right: 0;
+        bottom: 0;
+    }
 
-    #goal .graph .value {
-        background: #000;
-        border-radius: 10px;
+        #strava .goal .distancegoal span {
+            font-size: 5vmin;
+        }
+
+
+    #strava .goal .graph {
+        clear: left;
         height: 30px;
-        width: 0%;
+        background: #d0d0d0;
+        border-radius: 10px;
+        width: 100%;
     }
+
+        #strava .goal .graph .value {
+            background: #000;
+            border-radius: 10px;
+            height: 30px;
+            width: 0%;
+        }
 
 #strava .activity {
     margin-top: 4%;
@@ -252,7 +259,7 @@ li {
         padding-right: 2%;
     }
 
-#strava #friendactivity {
+#strava .friendactivity {
     position: absolute;
     top: 54%;
     right: 2%;
@@ -286,7 +293,6 @@ li {
     }
 
     #settings .connections-list a {
-        
         font-family: 'HelveticaNeue-Extended';
         width: 30%;
         display: block;
@@ -298,16 +304,17 @@ li {
         text-align: center;
         font-size: 2.5vmin;
     }
-    
+
     #settings .connections-list em {
-        font-style:normal;
+        font-style: normal;
     }
+
     #settings .connections-list .info {
-        clear:both;
+        clear: both;
         margin-left: 6%;
         font-size: 2.5vmin;
     }
-    /*#settings .connections-list .twitter a {
+/*#settings .connections-list .twitter a {
         background:#55ACEE  !important;
     }
     #settings .connections-list .ms a {

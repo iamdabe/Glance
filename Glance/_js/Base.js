@@ -1,6 +1,4 @@
-// JavaScript Document
-
-//Classes
+ï»¿// Glance: base.js
 
 //Container
 var _baseContainer;
@@ -15,34 +13,24 @@ var _cityContainer;
 var _currenttempContainer;
 var _forecastContainer;
 
-var _stravaContainer;
-var _distancecoveredContainer;
-var _distancegoalContainer;
-var _graphContainer;
-var _activityContainer;
-var _friendactivityContainer;
-
-var _weatherUrl = 'http://api.openweathermap.org/data/2.5/forecast/daily?q=';
+var _weatherAppID = '1f82bd22c38c07f1d13e8d3664eb2dee'
+var _weatherUrl = 'http://api.openweathermap.org/data/2.5/forecast/daily?appid=' + _weatherAppID +'&q=';
 var _weatherParams = '&mode=json&units=metric&cnt=5'
 var _weatherCity = 'southampton,uk';
-
 var _weekdayNames = 'MON TUE WED THU FRI SAT SUN'.split(' ');
 
-var _distanceConversion = 0.000621371192;
-var _speedConversion = 2.23693629;
-var _climbConversion = 3.2808399;
-var _distanceGoal = 50;
 
 var _rootURL = window.location.protocol + "//" + window.location.host + window.location.pathname;
 
-var _stravaClientID = 940;
-var _stravaClientSecret = 'dfb6c3a088f6e6ffa88ddb14501b3e9f64014c97';
-var _stravaUrlAuth = 'https://www.strava.com/oauth/authorize?client_id=' + _stravaClientID + '&response_type=code&redirect_uri=' + _rootURL + '&state=stravaoauth&approval_prompt=force';
-var _stravaUrlToken = 'https://www.strava.com/oauth/token';
-var _stravaUrlDeAuth = 'https://www.strava.com/oauth/deauthorize';
-
 var _instagramUrlAuth = "https://api.instagram.com/v1/users/self/feed?access_token=";
 var _instagramUrlFeed = "https://instagram.com/oauth/authorize/?client_id=274a865a47ee44bda36c89f24bf8dfc3&redirect_uri=http://instagram.demodern.de/&response_type=token";
+
+var _outlookClientID = 'e20a36de-5ef2-48f4-a52b-e485b670aab3';
+var _outlookClientSecret = 'XXTahVHPfTXhqnuRV6rv13k';
+var _outlookUrlAuth = 'https://login.microsoftonline.com/common/oauth2/v2.0/authorize?client_id=' + _outlookClientID + '&response_type=code&redirect_uri=' + encodeURIComponent(_rootURL + '?state=outlookoauth') + '&scope=https://outlook.office.com/Calendars.Read';
+var _outlookUrlToken = 'https://login.microsoftonline.com/common/oauth2/v2.0/token'
+
+//console.log(_outlookUrlAuth);
 
 var _liveClientID = '000000004413FC1B'
 var _liveClientSecret = 'JV1trf9QoSC76dnCSeqv7nQN5H9pXP0D'
@@ -55,46 +43,31 @@ var _liveCalendarsUrl = 'https://apis.live.net/v5.0/me/calendars?access_token=' 
 
 var _proxyUrl = _rootURL + 'proxy.ashx';
 
-var _isStrava = false;
-var _isLive = false;
-
-
-
-
 function init() {
 
-    _timeContainer = $('#clock .time');
-    _dayofweekContainer = $('#clock .dayofweek');
-    _dateContainer = $('#clock .date');
-    _eventsContainer = $('#clock .events');
+    _timeContainer = $('.clock .time');
+    _dayofweekContainer = $('.clock .dayofweek');
+    _dateContainer = $('.clock .date');
+    _eventsContainer = $('.clock .events');
 
-    _cityContainer = $('#weather .city');
-    _currenttempContainer = $('#weather .currenttemp');
-    _forecastContainer = $('#weather .forecast');
+    _cityContainer = $('.weather .city');
+    _currenttempContainer = $('.weather .currenttemp');
+    _forecastContainer = $('.weather .forecast');
 
-    _distancecoveredContainer = $('#strava .distancecovered');
-    _distancegoalContainer = $('#strava .distancegoal');
-    _graphContainer = $('#strava #goal .graph');
-    _activityContainer = $('#strava #goal .activity');
-    _friendactivityContainer = $('#strava #friendactivity .activity');
 
-    // Setup proxy
-    $.ajaxPrefilter(function (options) {
-        if (options.crossDomain) {
-            var newData = { data: JSON.stringify(options.data), url: options.url };
-            options.url = _proxyUrl;
-            options.data = $.param(newData);
-            options.crossDomain = false;
-        }
-    });
+
 
 
     initFullPage();
-    initOAuth();
+    
+
+    _strava = new Strava();
+    _plex = new Plex();
+
+
     initCalendar();
     initCalendarEvents();
     initWeather();
-    initStrava();
 }
 
 function initFullPage() {
@@ -111,100 +84,21 @@ function initFullPage() {
     });
 }
 
-function initOAuth() {
-    oAuthSetup();
-    oAuthResponseCheck();
-}
 
-function oAuthSetup() {
 
-    var stravaAccessToken = localStorage.getItem('stravaAccessToken');
-    var liveAccessToken = localStorage.getItem('liveAccessToken');
-    var stravaUser = localStorage.getItem('stravaUser');
 
-    _isStrava = ((stravaAccessToken != null) ? true : false)
-    _isLive = ((liveAccessToken != null) ? true : false)
 
-    if (_isStrava) {
-        setOAuthUI('strava', 'Disconnect', _stravaUrlDeAuth, stravaUser)
-    } else {
-        setOAuthUI('strava', 'Connect', _stravaUrlAuth, null)
-    }
 
-    if (_isLive) {
-        setOAuthUI('ms', 'Disconnect', _liveUrlAuth, '')
-    } else {
-        setOAuthUI('ms', 'Connect', _liveUrlAuth, null)
-    }
 
-}
 
-function setOAuthUI(provider, status, url, user) {
-    var Connected = ((user != null) ? true : false)
-    var oAuthLink = $('#settings .connections-list .' + provider + ' a.connect')
-    var oAuthInfo = $('#settings .connections-list .' + provider + ' .info')
 
-    oAuthLink.attr('href', url);
-    oAuthLink.find("em").html(status);
-    if (Connected){
-        oAuthInfo.html('Connected as ' + user);
-    }
-}
 
-function oAuthResponseCheck() {
-    console.log(getUrlVars());
 
-    var oAuthProvider = '';
-    var state = '';
-    var accessToken = '';
 
-    state = getUrlVars()['state'];
 
-    if (!state) {
-        var scope = getUrlVars()['scope'];
-        if (scope) {
-            if (scope.indexOf('wl.') > -1) {
-                state = 'liveoauth';
-            }
-        }
-    }
 
-    console.log(state);
 
-    switch (state) {
-        case 'liveoauth':
-            //TODO: Get Proper Token & Refresh Token storage + refresh token check
-            var accesstoken = getUrlVars()[0];
-            localStorage.setItem('liveAccessToken', accesstoken);
-            oAuthSetup();
 
-            break;
-        case 'stravaoauth':
-            var code = getUrlVars()['code'];
-            if (code) {
-                var token_url = _stravaUrlToken;
-                $.ajax({
-                    url: token_url,
-                    type: 'POST',
-                    crossDomain: true,
-                    processData: false,
-                    dataType: "json",
-                    data: { client_id: _stravaClientID, client_secret: _stravaClientSecret, code: code },
-                    success: function (data) {
-                        console.log(data)
-                        localStorage.setItem('stravaAccessToken', data.access_token);
-                        localStorage.setItem('stravaUser', data.athlete.email);
-                        oAuthSetup();
-                        initStrava();
-                    },
-                    error: function (error) {
-
-                    }
-                });
-            }
-            break;
-    }
-}
 
 function initCalendar() {
     updateTime();
@@ -249,7 +143,7 @@ function updateCalendarEvents() {
 }
 
 function onCalendarEventsLoaded(data) {
-    if (data) {
+    if (data.data) {
         //console.log(data.data);
 
         _eventsContainer.html('');
@@ -290,6 +184,7 @@ function updateWeather() {
     var call;
 
     url = _weatherUrl + _weatherCity + _weatherParams;
+    //console.log(url);
     call = $.getJSON(url, onWeatherLoaded);
 }
 
@@ -298,7 +193,7 @@ function onWeatherLoaded(data) {
         var icon = weatherIcon(data.list[0].weather[0].icon.substr(0, 2));
 
         _cityContainer.html(data.city.name);
-        _currenttempContainer.html(Math.round(data.list[0].temp.day) + '°');
+        _currenttempContainer.html(Math.round(data.list[0].temp.day) + 'Â°');
         _currenttempContainer.append(' <i class="wi ' + icon + '"></i>')
         _forecastContainer.html('');
 
@@ -314,7 +209,7 @@ function onWeatherLoaded(data) {
                     $('<span>').append(_weekdayNames[dayofweek])).append(
                     $('<span>').attr('class', 'forecasttemp').append(
                     $(' <i class="wi ' + forecasticon + '"></i>')).append(
-                    Math.round(this.temp.day) + '°')
+                    Math.round(this.temp.day) + 'Â°')
             ));
         });
     }
@@ -352,116 +247,3 @@ function weatherIcon(feedicon) {
 }
 
 
-/* STRAVA */
-
-
-function initStrava() {
-    updateStrava()
-    setInterval(updateStrava, 1200000);
-}
-
-function updateStrava() {
-
-    // init only if we have an authtoken
-    //console.log(stravaAccessToken);
-
-    if (_isStrava) {
-        var stravaAccessToken = localStorage.getItem('stravaAccessToken');
-
-        // Pull current user
-        var stravauser;
-        $.getJSON('https://www.strava.com/api/v3/athlete?access_token=' + stravaAccessToken + '&callback=?', function (data) {
-            stravauser = data;
-
-            // Once current user is pulled, pull latest 2 activities
-            $.getJSON('https://www.strava.com/api/v3/athlete/activities?per_page=2&access_token=' + stravaAccessToken + '&callback=?', function (data) {
-                _activityContainer.html('');
-                $.each(data, function () {
-                    _activityContainer.append(
-                        $('<div>').attr('class', 'item clearfix')
-                            .append(
-                            $('<div>').attr('class', 'type')
-                                .append($('<i>').attr('class', 'icon-' + ((this.type == 'Ride') ? 'cycle' : 'run')))
-                            ).append(
-                            $('<div>').attr('class', 'title').append(this.name)).append(
-                            $('<ul>').attr('class', 'info clearfix').append(
-                            $('<li>').append(stravauser.firstname + ' ' + stravauser.lastname)).append(
-                            $('<li>').append(Math.round((this.distance * _distanceConversion) * 10) / 10
-                            ).append($('<span>').append('mi'))).append(
-                            $('<li>').append(Math.round((this.total_elevation_gain * _climbConversion) * 10) / 10
-                            ).append($('<span>').append('ft'))).append(
-                            $('<li>').append(Math.round((this.average_speed * _speedConversion) * 10) / 10
-                            ).append($('<span>').append('mph'))).append(
-                            $('<li>').append($('<i>').attr('class', 'fa fa-trophy')).append(this.achievement_count)
-                        )));
-                });
-            });
-
-        });
-
-        var begin = moment().isoWeekday(1).startOf('isoweek');
-        var startofweek = Math.floor(begin.valueOf() / 1000);
-
-        // Pull current week activities 
-        $.getJSON('https://www.strava.com/api/v3/athlete/activities?after=' + startofweek + '&access_token=' + stravaAccessToken + '&callback=?', function (data) {
-
-            _distancecoveredContainer.html('');
-            _distancegoalContainer.html('');
-
-
-            // Calculate total distance covered (strava reports in m, convert to miles)
-            var distancecovered = 0;
-            $.each(data, function () {
-                distancecovered += this.distance;
-            });
-
-            distancecovered = distancecovered * _distanceConversion;
-            _distancecoveredContainer.append(Math.round(distancecovered * 10) / 10).append($('<span>').append('mi'));
-            _distancegoalContainer.append(Math.round(_distanceGoal)).append($('<span>').append('mi'));
-
-            var percent = (100 / _distanceGoal) * distancecovered;
-            if (percent > 100) percent = 100;
-
-            _graphContainer.find('.value').animate({ 'width': percent + '%' }, 2000)
-        });
-
-        // Pull friends activity feed
-        $.getJSON('https://www.strava.com/api/v3/activities/following?per_page=5&access_token=' + stravaAccessToken + '&callback=?', function (data) {
-            //console.log(data);
-            _friendactivityContainer.html('');
-            $.each(data, function () {
-                _friendactivityContainer.append(
-                    $('<div>').attr('class', 'item clearfix').append(
-                        $('<div>').attr('class', 'type')
-                            .append($('<i>').attr('class', 'icon-' + ((this.type == 'Ride') ? 'cycle' : 'run')))
-                        ).append(
-                        $('<div>').attr('class', 'title').append(this.name)).append(
-                        $('<ul>').attr('class', 'info clearfix').append(
-                        $('<li>').append(this.athlete.firstname + ' ' + this.athlete.lastname)).append(
-                        $('<li>').append(Math.round((this.distance * _distanceConversion) * 10) / 10
-                        ).append($('<span>').append('mi'))).append(
-                        $('<li>').append(Math.round((this.total_elevation_gain * _climbConversion) * 10) / 10
-                        ).append($('<span>').append('ft'))).append(
-                        $('<li>').append(Math.round((this.average_speed * _speedConversion) * 10) / 10
-                        ).append($('<span>').append('mph'))).append(
-                        $('<li>').append($('<i>').attr('class', 'fa fa-trophy')).append(this.achievement_count)
-                    )));
-            });
-        });
-    }
-
-}
-
-function getUrlVars() {
-    var vars = [],
-		hash;
-    var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
-
-    for (var i = 0; i < hashes.length; i++) {
-        hash = hashes[i].split('=');
-        vars.push(hash[0]);
-        vars[hash[0]] = hash[1];
-    }
-
-    return vars;
-}

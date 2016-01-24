@@ -14,6 +14,9 @@
     <script type="text/javascript" src="_lib/jquery.js"></script>
     <script type="text/javascript" src="_lib/moment.min.js"></script>
     <script type="text/javascript" src="_lib/jquery.fullPage.min.js"></script>
+    <script type="text/javascript" src="_js/_oauth/Oauth.js"></script>
+    <script type="text/javascript" src="_js/_strava/Strava.js"></script>
+    <script type="text/javascript" src="_js/_plex/Plex.js"></script>
     <script type="text/javascript" src="_js/Base.js"></script>
 
 </head>
@@ -25,26 +28,32 @@
         });
     </script>
     <div id="fullpage">
+
         <div class="section">
             <div id="home" class="slide glance">
                 <div class="overlay">
-                    <div id="clock">
+                    <div class="clock">
                         <ul class="dayofweek"></ul>
                         <div class="time">.</div>
                         <div class="date">.</div>
                         <div class="events"></div>
                     </div>
-                    <div id="weather">
+                    <div class="weather">
                         <div class="city">.</div>
                         <div class="currenttemp">.</div>
                         <ul class="forecast"></ul>
                     </div>
                 </div>
             </div>
+            <div id="plex" class="slide glance">
+                <div class="overlay">
+                    <div class="latest">
+                    </div>
+                </div>
+            </div>
             <div id="strava" class="slide glance">
                 <div class="overlay">
-
-                    <div id="goal">
+                    <div class="goal">
                         <div class="title">Weekly Goal</div>
                         <div class="distance">
                             <div class="distancecovered"></div>
@@ -53,15 +62,14 @@
                         <div class="graph"><div class="value"></div></div>
                         <div class="activity"></div>
                     </div>
-                    <div id="friendactivity">
+                    <div class="friendactivity">
                         <div class="title">Friends Activity</div>
                         <div class="activity"></div>
                     </div>
                 </div>
             </div>
             <div id="settings" class="slide glance">
-                <div class="overlay">
-
+                <div class="overlay"
 
                     <ul class="nav">
                         <li>General</li>
