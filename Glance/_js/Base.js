@@ -68,6 +68,17 @@ function init() {
     initCalendar();
     initCalendarEvents();
     initWeather();
+    initSettings();
+}
+
+function initSettings() {
+    options = {
+        labels_placement: "right",
+        width: 50,
+        height: 20,
+        button_width: 25
+    };
+    $(".switch-wrapper input").switchButton(options);
 }
 
 function initFullPage() {

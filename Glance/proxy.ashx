@@ -13,7 +13,10 @@ public class Handler : IHttpHandler
         string url = context.Request["url"].ToString();
         string data = context.Request["data"].ToString();
         string method = context.Request.HttpMethod;
-        string jsonResponse = ProxyRequest(method, url, data);
+
+        string jsonResponse = ProxyRequest(method, url, data, context);
+
+
 
         context.Response.Cache.SetExpires(DateTime.Now);
         context.Response.ContentType = "application/json";
@@ -21,7 +24,7 @@ public class Handler : IHttpHandler
         context.Response.End();
     }
 
-    private string ProxyRequest(string method, string url, string data)
+    private string ProxyRequest(string method, string url, string data, HttpContext context)
     {
         System.Net.HttpWebRequest wr = (HttpWebRequest)HttpWebRequest.Create(url);
         wr.Method = method.ToUpper();
@@ -29,15 +32,26 @@ public class Handler : IHttpHandler
         //wr.MediaType = "application/json";
         //wr.Accept = "application/json";
 
-
         string returndata = " ";
-
         var request = (HttpWebRequest)WebRequest.Create(url);
         request.Method = method.ToUpper();
-        request.ContentType = "application/json";
-        request.MediaType = "application/json";
-        request.Accept = "application/json";
 
+        foreach (var key in context.Request.Headers.AllKeys)
+        {
+            if (((request.Headers[key] ?? "").Trim().Length == 0) &! (WebHeaderCollection.IsRestricted(key)) && (key.StartsWith("X") | key.StartsWith("Authorization")))
+            {
+                request.Headers.Add(key, context.Request.Headers[key]);
+            }
+        }
+        if (context.Request.ContentType.Length > 0)
+        {
+            request.ContentType = context.Request.ContentType; //"application/json";
+            //request.MediaType = context.Request.ContentType; // "application/json";
+        }
+        if (context.Request.AcceptTypes.Length > 0)
+        {
+            request.Accept = context.Request.AcceptTypes[0]; //"application/json";
+        }
         if (data.Length > 0)
         {
             // Set the data to send.

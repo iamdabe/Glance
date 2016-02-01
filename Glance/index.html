@@ -12,8 +12,11 @@
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
 
     <script type="text/javascript" src="_lib/jquery.js"></script>
+    <script type="text/javascript" src="_lib/jquery-ui.min.js"></script>
+
     <script type="text/javascript" src="_lib/moment.min.js"></script>
     <script type="text/javascript" src="_lib/jquery.fullPage.min.js"></script>
+    <script type="text/javascript" src="_lib/jquery.switchButton.js"></script>
     <script type="text/javascript" src="_js/_oauth/Oauth.js"></script>
     <script type="text/javascript" src="_js/_strava/Strava.js"></script>
     <script type="text/javascript" src="_js/_plex/Plex.js"></script>
@@ -45,12 +48,6 @@
                     </div>
                 </div>
             </div>
-            <div id="plex" class="slide glance">
-                <div class="overlay">
-                    <div class="latest">
-                    </div>
-                </div>
-            </div>
             <div id="strava" class="slide glance">
                 <div class="overlay">
                     <div class="goal">
@@ -68,27 +65,102 @@
                     </div>
                 </div>
             </div>
+            <div id="plex" class="slide glance">
+                <div class="latest">
+                </div>
+                <div class="overlay">
+                    <div class="deck">
+                        <div class="title">On Deck</div>
+                        <div class="list"></div>
+
+                    </div>
+
+                </div>
+            </div>
             <div id="settings" class="slide glance">
-                <div class="overlay"
+                <div class="overlay">
 
                     <ul class="nav">
-                        <li>General</li>
+                        <li><strong>General</strong></li>
+                        <li>Backgrounds</li>
                         <li>Home</li>
-                        <li>Strava</li>
                         <li>Weather</li>
-                        <li>Feeds</li>
-                        <li>Connections</li>
+                        <li>Strava</li>
+                        <li>Plex</li>
+                        <li>Instagram</li>
                     </ul>
+
+                    <div class="panel general">
+                        <h2>Options</h2>
+                        <span>Auto cycle through screens</span>
+                        <div class="switch-wrapper">
+                            <input type="checkbox" value="1" disabled checked>
+                        </div>
+
+
+                        <h2>Screens</h2>
+                        <p>Select screens to enable</p>
+
+                        <ul class="connections-list">
+                            <li class="home clearfix">
+                                <i class="fa fa-home"></i>
+                                <span>Home (required)</span>
+                                <div class="switch-wrapper">
+                                    <input type="checkbox" value="1" disabled checked>
+                                </div>
+                            </li>
+                            <li class="strava clearfix">
+                                <i class="icon-strava"></i>
+                                <span>Strava</span>
+                                <div class="switch-wrapper">
+                                    <input type="checkbox" value="1" checked>
+                                </div>
+                            </li>
+                            <li class="plex clearfix">
+                                <i class="fa-film"></i>
+                                <span>Plex</span>
+                                <div class="switch-wrapper">
+                                    <input type="checkbox" value="1" checked>
+                                </div>
+                            </li>
+                            <li class="instagram clearfix">
+                                <i class="fa fa-instagram"></i>
+                                <span>Instagram</span>
+                                <div class="switch-wrapper">
+                                    <input type="checkbox" value="1">
+                                </div>
+                            </li>
+                            <li class="twitter clearfix">
+                                <i class="fa fa-twitter"></i>
+                                <span>Twitter</span>
+                                <div class="switch-wrapper">
+                                    <input type="checkbox" value="1">
+                                </div>
+                            </li>
+                    </div>
+                    <div class="panel">
+
+                        <h2>Background</h2>
+                        <p>Choose background for screens, options include instagram search, etc.</p>
+
+                    </div>
+                    <div class="panel">
+
+                        <h2>Plex</h2>
+                        Plex Username:
+                        Plex Password:
+
+                    </div>
+                    <div class="panel">
+
+
+                        <h2>Strava</h2>
+                        Goal: 50miles
+
+                    </div>
 
                     <div class="panel">
 
-                        <div class="onoffswitch">
-                            <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="myonoffswitch">
-                            <label class="onoffswitch-label" for="myonoffswitch">
-                                <span class="onoffswitch-inner"></span>
-                                <span class="onoffswitch-switch"></span>
-                            </label>
-                        </div>
 
                         <h2>Connections</h2>
                         <ul class="connections-list">
@@ -102,6 +174,12 @@
                                 <i class="icon-strava"></i>
                                 <span>Strava</span>
                                 <a href="" class="connect"><i class="icon-strava"></i><em>Connect</em></a>
+                                <div class="info clearfix"></div>
+                            </li>
+                            <li class="plex clearfix">
+                                <i class="icon-plex"></i>
+                                <span>Plex</span>
+                                <a href="" class="connect"><i class="icon-plex"></i><em>Connect</em></a>
                                 <div class="info clearfix"></div>
                             </li>
                             <li class="flickr clearfix">
