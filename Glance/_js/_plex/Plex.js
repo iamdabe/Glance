@@ -1,9 +1,9 @@
 ﻿
-/* STRAVA */
+/* PLEX */
 var Plex = function (opts) {
     this.options = {};
     //this._resetOptions();
-    this.options = $.extend({
+    this.options = $.extend(opts, {
         container: $('#plex'),
         serverName: 'Dave Media',
         username: '',
@@ -13,8 +13,7 @@ var Plex = function (opts) {
         urlAuth: 'https://plex.tv/users/sign_in.xml',
         urlServer: 'https://plex.tv/pms/servers.xml',
         tokenStorage: 'plexAccesstoken'
-
-    }, opts);
+    });
 
     this.plexHeaders = {
         'X-Plex-Client-Identifier': guid(),
@@ -59,7 +58,6 @@ Plex.prototype.authenticate = function () {
             dataType: "xml",
             method: 'POST',
             success: function (data) {
-
                 var token = $(data).find('authentication-token').text();
                 if (token) {
                     localStorage.setItem(self.options.tokenStorage, token);
@@ -68,9 +66,7 @@ Plex.prototype.authenticate = function () {
             }
         });
     }
-
 }
-
 
 Plex.prototype.update = function () {
     var self = this;
@@ -92,7 +88,6 @@ Plex.prototype.update = function () {
                 var serverPort = $(data).find('Server[name="' + options.serverName + '"]').attr('port');
 
                 if (serverAddress) {
-
                     $.ajax({
                         url: "http://" + serverAddress + ":" + serverPort + options.urlList,
                         headers: {
@@ -115,7 +110,6 @@ Plex.prototype.update = function () {
                         }
                     });
 
-
                     $.ajax({
                         url: "http://" + serverAddress + ":" + serverPort + options.urlDeck,
                         headers: {
@@ -132,7 +126,7 @@ Plex.prototype.update = function () {
                                 $.each(data2._children, function () {
                                     deckContainer.append(
                                         $('<img>').attr('src', "http://86.149.106.32:18587" + (this.parentThumb || this.thumb) + "?X-Plex-Token=" + self.token())
-                                        );
+                                    );
                                 });
                             };
                         }
@@ -141,10 +135,7 @@ Plex.prototype.update = function () {
             }
         });
     }
-
-
 };
-
 
 function guid() {
     function s4() {

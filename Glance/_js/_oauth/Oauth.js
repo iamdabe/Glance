@@ -1,8 +1,7 @@
-﻿var OAuth = function (options) {
+﻿var OAuth = function (opts) {
     this.options = {};
     this._resetOptions();
-    $.extend(this.options, options);
-
+    this.options = $.extend(this.options, opts);
     this.init();
 }
 
@@ -11,35 +10,65 @@ OAuth.prototype.token = function () {
     return _token;
 }
 
-OAuth.prototype.hasToken = function () {
-    return ((this.token != null) ? true : false);
+OAuth.prototype.hasToken = function (callback, reject) {
+    var self = this;
+    var provider = self.options.provider;
+
+    if ((self.token() != null) ? true : false) {
+
+        if ((provider.refreshTokenStorage    != null) ? true : false) {
+            self._validToken(function () {
+                if (typeof callback === "function") {
+                    callback();
+                }
+            }, function () {
+                self._refreshToken(function () {
+                    if (typeof callback === "function") {
+                        callback();
+                    }
+                }, function () {
+                    if (typeof reject === "function") {
+                        reject();
+                    }
+                });
+            });
+        } else {
+            if (typeof callback === "function") {
+                callback();
+            }
+        }
+
+    } else {
+        if (typeof reject === "function") {
+            reject();
+        }
+    }
 }
 
 OAuth.prototype.init = function () {
+    var self = this;
+    // Setup proxy
+
+
     this._responseCheck();
     this._initProvider();
-
-    // Setup proxy
-    $.ajaxPrefilter(function (options) {
-        if (options.crossDomain) {
-            var newData = { data: JSON.stringify(options.data), url: options.url };
-            options.url = _proxyUrl;
-            options.data = $.param(newData);
-            options.crossDomain = false;
-        }
-    });
 }
 
 OAuth.prototype._resetOptions = function _resetOptions() {
     this.options = {
+        proxy:'',
         provider: {
-            providerID: '',
-            clientID: '',
+            providerId: '',
+            clientId: '',
             clientSecret: '',
             callback: null,
             tokenStorage: '',
+            refreshTokenStorage: '',
             urlAuth: '',
             urlToken: '',
+            urlTokenRefresh: '',
+            urlTokenCheck: '',
+            invalidTokenValue: '',
             deAuthCallback: null,
             displayNameStorage: ''
         }
@@ -47,15 +76,15 @@ OAuth.prototype._resetOptions = function _resetOptions() {
 };
 
 OAuth.prototype._initProvider = function () {
-    var provider = this.options.provider;
-    _hasAccess = ((this.token != null) ? true : false)
+    var self = this;
+    var provider = self.options.provider;
 
     // if we have token then oauth ok.
-    if (_hasAccess) {
-        this._setUI(provider.providerID, 'Disconnect', provider.deAuthCallback, provider.displayName)
-    } else {
-        this._setUI(provider.providerID, 'Connect', provider.urlAuth, null)
-    }
+    self.hasToken(function () {
+        self._setUI(provider.providerId, 'Disconnect', provider.deAuthCallback, provider.displayName)
+    }, function () {
+        self._setUI(provider.providerId, 'Connect', provider.urlAuth, null)
+    });
 }
 
 OAuth.prototype._setUI = function (provider, status, url, user) {
@@ -63,73 +92,170 @@ OAuth.prototype._setUI = function (provider, status, url, user) {
     var oAuthLink = $('#settings .connections-list .' + provider + ' a.connect')
     var oAuthInfo = $('#settings .connections-list .' + provider + ' .info')
 
-    oAuthLink.attr('href', url);
     oAuthLink.find("em").html(status);
     if (Connected) {
         oAuthInfo.html('Connected as ' + user);
+    } else {
+        oAuthLink.attr('href', url);
+    }
+}
+
+OAuth.prototype._validToken = function (callback, reject) {
+    console.log('_validToken');
+    var self = this;
+    var provider = self.options.provider;
+    $.ajax({
+        url: provider.urlTokenCheck,
+        headers: $.extend({
+            "Authorization": 'Bearer ' + self.token()
+        }, {}),
+        dataType: "json",
+        method: 'GET',
+        success: function (data) {
+
+            console.log('_validToken: success;');
+
+            if (JSON.stringify(data).indexOf(provider.invalidTokenValue) == -1) {
+                console.log('_validToken: callback;');
+                callback();
+            } else {
+                console.log('_validToken: reject;');
+                reject();
+            }
+        },
+        error: function (data) {
+            reject();
+        }
+    });
+}
+
+OAuth.prototype._refreshToken = function (callback, reject) {
+    console.log('_refreshToken');
+    var self = this;
+    var provider = self.options.provider;
+    if (provider.urlTokenRefresh && provider.refreshTokenStorage) {
+        $.ajax({
+            url: provider.urlTokenRefresh.replace('{refresh_token}', localStorage.getItem(provider.refreshTokenStorage)),
+            type: 'GET',
+            crossDomain: true,
+            processData: false,
+            success: function (data) {
+                console.log('_refreshToken: success;');
+                if (data.access_token) {
+                    localStorage.setItem(provider.tokenStorage, data.access_token);
+                    localStorage.setItem(provider.refreshTokenStorage, data.refresh_token);
+
+                    console.log('_refreshToken: callback;');
+
+                    //self._initProvider();
+
+                    if (typeof callback === "function") {
+                        callback();
+                    }
+                } else {
+                    localStorage.setItem(provider.tokenStorage, null);
+                    localStorage.setItem(provider.refreshTokenStorage, null);
+
+                    console.log('_refreshToken: reject;');
+                    //self._initProvider();
+
+                    if (typeof reject === "function") {
+                        reject();
+                    }
+                }
+            },
+            error: function (error) {
+                if (typeof reject === "function") {
+                    reject();
+                }
+            }
+        });
     }
 }
 
 OAuth.prototype._responseCheck = function () {
-    var provider = this.options.provider;
+    var self = this;
+    var provider = self.options.provider;
     var state = '';
 
     //console.log(getUrlVars());
 
     state = getUrlVars()['state'];
 
-    if (!state) {
-        var scope = getUrlVars()['scope'];
-        if (scope) {
-            if (scope.indexOf('wl.') > -1) {
-                state = 'liveoauth';
-            }
+    //console.log(state);
+
+    if (provider.providerId == state) {
+        switch (state) {
+            case 'microsofthealth':
+                var code = getUrlVars()['code'];
+                //console.log(code);
+                //console.log(provider);
+
+                if (code) {
+                    $.ajax({
+                        url: provider.urlToken.replace('{code}', code),
+                        type: 'GET',
+                        //crossDomain: true,
+                        //processData: false,
+                        success: function (data) {
+                            //console.log(data)
+                            if (data.access_token) {
+                                localStorage.setItem(provider.tokenStorage, data.access_token);
+                                localStorage.setItem(provider.refreshTokenStorage, data.refresh_token);
+
+                                //console.log(localStorage.getItem(provider.refreshTokenStorage));
+
+                                self._initProvider();
+
+                                if (typeof provider.callback === "function") {
+                                    provider.callback();
+                                }
+
+                            } else {
+                                self.refreshToken();
+                            }
+
+
+                        },
+                        error: function (error) {
+
+                        }
+                    });
+                }
+                break;
+
+            case 'strava':
+                var code = getUrlVars()['code'];
+                if (code) {
+                    $.ajax({
+                        url: provider.urlToken + '?client_id=' + provider.clientId + '&client_secret=' + provider.clientSecret + '&code=' + code,
+                        type: 'POST',
+                        //crossDomain: true,
+                        //processData: false,
+                        //dataType: "json",
+                        //data: { client_id: provider.clientId, client_secret: provider.clientSecret, code: code },
+                        success: function (data) {
+                            if (data.access_token) {
+                                localStorage.setItem(provider.tokenStorage, data.access_token);
+                                localStorage.setItem(provider.displayNameStorage, data.athlete.email);
+
+                                self._initProvider();
+
+                                if (typeof provider.callback === "function") {
+                                    provider.callback();
+                                }
+                            }
+
+                        },
+                        error: function (error) {
+
+                        }
+                    });
+                }
+                break;
         }
     }
-
-    console.log(state);
-
-    switch (state) {
-        case 'liveoauth':
-            //TODO: Get Proper Token & Refresh Token storage + refresh token check
-            var accesstoken = getUrlVars()[0];
-            localStorage.setItem(provider.tokenStorage, accesstoken);
-            oAuthSetup();
-
-            break;
-        case 'stravaoauth':
-            var code = getUrlVars()['code'];
-            if (code) {
-                var token_url = _stravaUrlToken;
-                $.ajax({
-                    url: token_url,
-                    type: 'POST',
-                    crossDomain: true,
-                    processData: false,
-                    dataType: "json",
-                    data: { client_id: provider.clientID, client_secret: provider.clientSecret, code: code },
-                    success: function (data) {
-                        console.log(data)
-                        localStorage.setItem(provider.tokenStorage, data.access_token);
-                        localStorage.setItem(provider.displayNameStorage, data.athlete.email);
-
-                        this._initProvider();
-
-                        if (typeof provider.callback === "function") {
-                            provider.callback();
-                        }
-
-                    },
-                    error: function (error) {
-
-                    }
-                });
-            }
-            break;
-    }
 }
-
-
 
 function getUrlVars() {
     var vars = [],

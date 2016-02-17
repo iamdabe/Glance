@@ -36,11 +36,12 @@ li {
     /*background-image: url('../_img/Mountain-Bike-New-Wallpaper.jpg');*/
 }
 
-#settings {
-    background: radial-gradient(#fff, #aaa);
-    background: -moz-radial-gradient(#fff, #aaa);
-    background: -ms-radial-gradient(#fff, #aaa);
-    background: -webkit-radial-gradient(#fff, #aaa);
+#settings, #microsofthealth {
+            background: rgb(255,255,255); /* Old browsers */
+            background: -moz-radial-gradient(center, ellipse cover, rgba(255,255,255,1) 50%, rgba(170,170,170,1) 90%, rgba(140,140,140,1) 100%); /* FF3.6-15 */
+            background: -webkit-radial-gradient(center, ellipse cover, rgba(255,255,255,1) 50%,rgba(170,170,170,1) 90%, rgba(140,140,140,1) 100%); /* Chrome10-25,Safari5.1-6 */
+            background: radial-gradient(ellipse at center, rgba(255,255,255,1) 50%,rgba(170,170,170,1) 90%, rgba(140,140,140,1) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+            filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#aaaaaa',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
 }
 
 .overlay {
@@ -207,7 +208,7 @@ li {
     #strava .goal .graph {
         clear: left;
         height: 30px;
-        background: #d0d0d0;
+        background: rgba(0,0,0,0.1);
         border-radius: 10px;
         width: 100%;
     }
@@ -459,3 +460,62 @@ li {
     -moz-border-radius: 4px;
     border-radius: 4px;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+ #microsofthealth {
+            text-align: center;
+        }
+
+            #microsofthealth .chart {
+                display: inline-block;
+                padding: 20px;
+            }
+
+        .rbc-label-start {
+            font-family: fontawesome;
+            font-weight: bold;
+            font-size: 15px;
+            fill: white;
+        }
+
+        .rbc-center-text {
+            fill: black;
+            font-family: 'Helvetica Neue Thin';
+        }
+
+        .rbc-center-text-line1 {
+            font-family: 'Helvetica Neue';
+        }
+
+        .rbc-center-text-line0 {
+            font-size: 95px;
+        }
+
+        .rbc-center-text-line1 {
+            font-size: 20px;
+        }
+
+
+        .smallchart .rbc-center-text {
+            fill: black;
+            font-family: 'Helvetica Neue Thin';
+        }
+
+        .smallchart .rbc-center-text-line0 {
+            font-size: 30px;
+        }
+
+        .smallchart .rbc-center-text-line1 {
+            font-size: 12px;
+        }

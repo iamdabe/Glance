@@ -1,26 +1,17 @@
-﻿
-function helloworld() {
-    alert('call me back, yo');
-};
-
-function goodbyworld() {
-    //alert('good bye');
-};
-
-/* STRAVA */
+﻿/* STRAVA */
 var Strava = function (opts) {
     this._oauth = {};
     this.options = {};
     this.options = $.extend({
         container: $('#strava'),
-        urlRoot: window.location.protocol + "//" + window.location.host + window.location.pathname,
         distanceConversion: 0.000621371192, //miles
         speedConversion: 2.23693629, //mph
         climbConversion: 3.2808399, //ft
         distanceGoal: 50, //goal
-        clientID: 940, // strava API clientID
-        clientSecret: 'dfb6c3a088f6e6ffa88ddb14501b3e9f64014c97',
-        urlAuth: 'https://www.strava.com/oauth/authorize?client_id=940&response_type=code&redirect_uri=' + window.location.protocol + "//" + window.location.host + window.location.pathname + '&state=stravaoauth&approval_prompt=force',
+        clientId: 0, // strava API clientId
+        clientSecret: '',
+        urlAuth: 'https://www.strava.com/oauth/authorize?client_id={client_id}&response_type=code&redirect_uri={redirect_uri}&state=strava&approval_prompt=force',
+        urlRedirect: window.location.protocol + "//" + window.location.host + window.location.pathname,
         urlToken: 'https://www.strava.com/oauth/token',
         urlDeAuth: 'https://www.strava.com/oauth/deauthorize'
     }, opts);
@@ -35,14 +26,14 @@ Strava.prototype.init = function () {
 
     this._oauth = new OAuth({
         provider: {
-            providerID: 'strava',
-            clientID: options.clientID,
+            providerId: 'strava',
+            clientId: options.clientId,
             clientSecret: options.clientSecret,
-            callback: self.update(),
+            callback: self.update.bind(self),
             tokenStorage: 'stravaAccessToken',
-            urlAuth: options.urlAuth,
-            urlToken: options.urlToken,
-            deAuthCallback: goodbyworld,
+            urlAuth: options.urlAuth.replace("{client_id}", options.clientId).replace("{client_secret}", options.clientSecret).replace("{redirect_uri}", encodeURIComponent(options.urlRedirect)),
+            urlToken: options.urlToken.replace("{client_id}", options.clientId).replace("{client_secret}", options.clientSecret).replace("{redirect_uri}", encodeURIComponent(options.urlRedirect)),
+            deAuthCallback: self.goodbye.bind(self),
             displayNameStorage: 'stravaUser'
         }
     });
@@ -61,8 +52,7 @@ Strava.prototype.update = function () {
     var graphContainer = container.find('.goal .graph');
     var friendactivityContainer = container.find('.friendactivity .activity');
 
-    if (this._oauth.hasToken) {
-
+    this._oauth.hasToken(function() {
         // Pull current user
         var stravauser;
         $.getJSON('https://www.strava.com/api/v3/athlete?access_token=' + self._oauth.token() + '&callback=?', function (data) {
@@ -143,5 +133,9 @@ Strava.prototype.update = function () {
                     )));
             });
         });
-    }
+    }, function () { console.log('strava error'); })
+};
+
+Strava.prototype.goodbye = function () {
+    console.log('good bye');
 };

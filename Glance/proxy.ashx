@@ -26,11 +26,10 @@ public class Handler : IHttpHandler
 
     private string ProxyRequest(string method, string url, string data, HttpContext context)
     {
+
+        System.Net.ServicePointManager.Expect100Continue = false;
         System.Net.HttpWebRequest wr = (HttpWebRequest)HttpWebRequest.Create(url);
         wr.Method = method.ToUpper();
-        //wr.ContentType = "application/json";
-        //wr.MediaType = "application/json";
-        //wr.Accept = "application/json";
 
         string returndata = " ";
         var request = (HttpWebRequest)WebRequest.Create(url);
@@ -45,6 +44,7 @@ public class Handler : IHttpHandler
         }
         if (context.Request.ContentType.Length > 0)
         {
+            wr.ContentType = context.Request.ContentType;
             request.ContentType = context.Request.ContentType; //"application/json";
             //request.MediaType = context.Request.ContentType; // "application/json";
         }
@@ -52,9 +52,21 @@ public class Handler : IHttpHandler
         {
             request.Accept = context.Request.AcceptTypes[0]; //"application/json";
         }
+
+        //context.Response.Write(wr.ContentType);
+        //context.Response.End();
+
+        //wr.ContentType = "application/json";
+        //wr.MediaType = "application/json";
+        //wr.Accept = "application/json";
+        //request.ContentType = "application/json";
+        //request.MediaType = "application/json";
+        //request.Accept = "application/json";
+
         if (data.Length > 0)
         {
             // Set the data to send.
+            request.ContentLength = data.Length;
             using (var streamWriter = new StreamWriter(request.GetRequestStream()))
             {
                 streamWriter.Write(data);

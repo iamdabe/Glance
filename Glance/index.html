@@ -13,13 +13,17 @@
 
     <script type="text/javascript" src="_lib/jquery.js"></script>
     <script type="text/javascript" src="_lib/jquery-ui.min.js"></script>
-
-    <script type="text/javascript" src="_lib/moment.min.js"></script>
     <script type="text/javascript" src="_lib/jquery.fullPage.min.js"></script>
     <script type="text/javascript" src="_lib/jquery.switchButton.js"></script>
+    <script type="text/javascript" src="_lib/moment.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.0/d3.js"></script>
+    <script type="text/javascript" src="_lib/d3radial.js"></script>
+
     <script type="text/javascript" src="_js/_oauth/Oauth.js"></script>
     <script type="text/javascript" src="_js/_strava/Strava.js"></script>
     <script type="text/javascript" src="_js/_plex/Plex.js"></script>
+    <script type="text/javascript" src="_js/_microsofthealth/MicrosoftHealth.js"></script>
     <script type="text/javascript" src="_js/Base.js"></script>
 
 </head>
@@ -65,18 +69,29 @@
                     </div>
                 </div>
             </div>
+            <div id="microsofthealth" class="slide glance">
+                <div class="overlay">
+                    <div class="calories chart"></div>
+                    <div class="steps chart"></div>
+                    <div class="sleep chart"></div>
+                    <div id="summaries"></div>
+                    <div id="activities"></div>
+                </div>
+            </div>
             <div id="plex" class="slide glance">
                 <div class="latest">
                 </div>
                 <div class="overlay">
-                    <div class="deck">
-                        <div class="title">On Deck</div>
-                        <div class="list"></div>
+                    <div class="overlay">
+                        <div class="deck">
+                            <div class="title">On Deck</div>
+                            <div class="list"></div>
 
+                        </div>
                     </div>
 
+                    </div>
                 </div>
-            </div>
             <div id="settings" class="slide glance">
                 <div class="overlay">
 
@@ -90,6 +105,7 @@
                         <li>Instagram</li>
                     </ul>
 
+                        <!---
                     <div class="panel general">
                         <h2>Options</h2>
                         <span>Auto cycle through screens</span>
@@ -121,6 +137,13 @@
                                 <span>Plex</span>
                                 <div class="switch-wrapper">
                                     <input type="checkbox" value="1" checked>
+                                </div>
+                            </li>
+                            <li class="instagram clearfix">
+                                <i class="fa fa-heart"></i>
+                                <span>Microsoft Health</span>
+                                <div class="switch-wrapper">
+                                    <input type="checkbox" value="1">
                                 </div>
                             </li>
                             <li class="instagram clearfix">
@@ -158,15 +181,15 @@
                         Goal: 50miles
 
                     </div>
-
+                            -->
                     <div class="panel">
 
 
                         <h2>Connections</h2>
                         <ul class="connections-list">
-                            <li class="ms clearfix">
+                            <li class="microsofthealth clearfix">
                                 <i class="fa fa-windows"></i>
-                                <span>Microsoft Account</span>
+                                <span>Microsoft Health</span>
                                 <a href="" class="connect"><i class="fa fa-windows"></i><em>Connect</em></a>
                                 <div class="info clearfix"></div>
                             </li>
