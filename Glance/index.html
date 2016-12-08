@@ -5,11 +5,12 @@
     <title>Glance</title>
     <meta name="viewport" content="width=device-width, user-scalable=no">
 
-    <link rel="stylesheet" type="text/css" href="_css/style.css" />
     <link rel="stylesheet" type="text/css" href="_css/iconmoon.css" />
     <link rel="stylesheet" type="text/css" href="_css/weather-icons.min.css" />
     <link rel="stylesheet" type="text/css" href="_css/jquery.fullPage.css" />
+    <link rel="stylesheet" type="text/css" href="_css/d3.nv.css" />
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="_css/style.css" />
 
     <script type="text/javascript" src="_lib/jquery.js"></script>
     <script type="text/javascript" src="_lib/jquery-ui.min.js"></script>
@@ -18,7 +19,8 @@
     <script type="text/javascript" src="_lib/moment.min.js"></script>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.0/d3.js"></script>
-    <script type="text/javascript" src="_lib/d3radial.js"></script>
+    <script type="text/javascript" src="_lib/d3.radial.js"></script>
+    <script type="text/javascript" src="_lib/d3.nv.js"></script>
 
     <script type="text/javascript" src="_js/_oauth/Oauth.js"></script>
     <script type="text/javascript" src="_js/_strava/Strava.js"></script>
@@ -69,11 +71,31 @@
                     </div>
                 </div>
             </div>
-            <div id="microsofthealth" class="slide glance">
+            <div id="microsofthealth" class="slide glance active">
                 <div class="overlay">
-                    <div class="calories chart"></div>
-                    <div class="steps chart"></div>
-                    <div class="sleep chart"></div>
+                    <div class="today">
+                        <div class="calories chart"></div>
+                        <div class="steps chart"></div>
+                        <div class="sleep chart"></div>
+                    </div>
+                    <div class="dailies">
+                        <div class="caloriesByDay chart">
+                            <div class="title"><i class="picon calorie"></i> Calories</div>
+                            <svg></svg>
+                        </div>
+                        <div class="stepsByDay chart">
+                            <div class="title"><i class="picon step"></i> Steps</div>
+                            <svg></svg>
+                        </div>
+                        <div class="heartRateByDay chart">
+                            <div class="title"><i class="picon heart-rate"></i> Heartrate</div>
+                            <svg></svg>
+                        </div>
+                        <div class="sleepsByDay chart">
+                            <div class="title"><i class="picon sleep"></i> Sleep</div>
+                            <svg></svg>
+                        </div>
+                    </div>
                     <div id="summaries"></div>
                     <div id="activities"></div>
                 </div>
@@ -90,8 +112,8 @@
                         </div>
                     </div>
 
-                    </div>
                 </div>
+            </div>
             <div id="settings" class="slide glance">
                 <div class="overlay">
 
@@ -105,7 +127,7 @@
                         <li>Instagram</li>
                     </ul>
 
-                        <!---
+                    <!---
                     <div class="panel general">
                         <h2>Options</h2>
                         <span>Auto cycle through screens</span>

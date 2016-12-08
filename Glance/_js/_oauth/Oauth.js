@@ -15,7 +15,6 @@ OAuth.prototype.hasToken = function (callback, reject) {
     var provider = self.options.provider;
 
     if ((self.token() != null) ? true : false) {
-
         if ((provider.refreshTokenStorage    != null) ? true : false) {
             self._validToken(function () {
                 if (typeof callback === "function") {
@@ -37,7 +36,6 @@ OAuth.prototype.hasToken = function (callback, reject) {
                 callback();
             }
         }
-
     } else {
         if (typeof reject === "function") {
             reject();
@@ -47,8 +45,6 @@ OAuth.prototype.hasToken = function (callback, reject) {
 
 OAuth.prototype.init = function () {
     var self = this;
-    // Setup proxy
-
 
     this._responseCheck();
     this._initProvider();
@@ -79,7 +75,6 @@ OAuth.prototype._initProvider = function () {
     var self = this;
     var provider = self.options.provider;
 
-    // if we have token then oauth ok.
     self.hasToken(function () {
         self._setUI(provider.providerId, 'Disconnect', provider.deAuthCallback, provider.displayName)
     }, function () {
@@ -112,9 +107,7 @@ OAuth.prototype._validToken = function (callback, reject) {
         dataType: "json",
         method: 'GET',
         success: function (data) {
-
             console.log('_validToken: success;');
-
             if (JSON.stringify(data).indexOf(provider.invalidTokenValue) == -1) {
                 console.log('_validToken: callback;');
                 callback();
@@ -177,11 +170,9 @@ OAuth.prototype._responseCheck = function () {
     var self = this;
     var provider = self.options.provider;
     var state = '';
-
-    //console.log(getUrlVars());
-
     state = getUrlVars()['state'];
 
+    //console.log(getUrlVars());
     //console.log(state);
 
     if (provider.providerId == state) {
@@ -195,15 +186,11 @@ OAuth.prototype._responseCheck = function () {
                     $.ajax({
                         url: provider.urlToken.replace('{code}', code),
                         type: 'GET',
-                        //crossDomain: true,
-                        //processData: false,
                         success: function (data) {
                             //console.log(data)
                             if (data.access_token) {
                                 localStorage.setItem(provider.tokenStorage, data.access_token);
                                 localStorage.setItem(provider.refreshTokenStorage, data.refresh_token);
-
-                                //console.log(localStorage.getItem(provider.refreshTokenStorage));
 
                                 self._initProvider();
 
@@ -214,11 +201,8 @@ OAuth.prototype._responseCheck = function () {
                             } else {
                                 self.refreshToken();
                             }
-
-
                         },
                         error: function (error) {
-
                         }
                     });
                 }
@@ -228,12 +212,8 @@ OAuth.prototype._responseCheck = function () {
                 var code = getUrlVars()['code'];
                 if (code) {
                     $.ajax({
-                        url: provider.urlToken + '?client_id=' + provider.clientId + '&client_secret=' + provider.clientSecret + '&code=' + code,
+                        url: provider.urlToken.replace('{code}', code),
                         type: 'POST',
-                        //crossDomain: true,
-                        //processData: false,
-                        //dataType: "json",
-                        //data: { client_id: provider.clientId, client_secret: provider.clientSecret, code: code },
                         success: function (data) {
                             if (data.access_token) {
                                 localStorage.setItem(provider.tokenStorage, data.access_token);
@@ -245,10 +225,8 @@ OAuth.prototype._responseCheck = function () {
                                     provider.callback();
                                 }
                             }
-
                         },
                         error: function (error) {
-
                         }
                     });
                 }

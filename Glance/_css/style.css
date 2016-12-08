@@ -1,4 +1,4 @@
-* {
+﻿* {
     padding: 0;
     margin: 0;
 }
@@ -36,12 +36,16 @@ li {
     /*background-image: url('../_img/Mountain-Bike-New-Wallpaper.jpg');*/
 }
 
-#settings, #microsofthealth {
-            background: rgb(255,255,255); /* Old browsers */
-            background: -moz-radial-gradient(center, ellipse cover, rgba(255,255,255,1) 50%, rgba(170,170,170,1) 90%, rgba(140,140,140,1) 100%); /* FF3.6-15 */
-            background: -webkit-radial-gradient(center, ellipse cover, rgba(255,255,255,1) 50%,rgba(170,170,170,1) 90%, rgba(140,140,140,1) 100%); /* Chrome10-25,Safari5.1-6 */
-            background: radial-gradient(ellipse at center, rgba(255,255,255,1) 50%,rgba(170,170,170,1) 90%, rgba(140,140,140,1) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-            filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#aaaaaa',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+#microsofthealth{
+    /*background-image: url('../_img/fitness2.jpg');*/
+}
+
+#settings {
+    background: rgb(255,255,255); /* Old browsers */
+    background: -moz-radial-gradient(center, ellipse cover, rgba(255,255,255,0.8) 50%, rgba(170,170,170,1) 90%, rgba(140,140,140,1) 100%); /* FF3.6-15 */
+    background: -webkit-radial-gradient(center, ellipse cover, rgba(255,255,255,.8) 50%,rgba(170,170,170,1) 90%, rgba(140,140,140,1) 100%); /* Chrome10-25,Safari5.1-6 */
+    background: radial-gradient(ellipse at center, rgba(255,255,255,.8) 50%,rgba(170,170,170,1) 90%, rgba(140,140,140,1) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#aaaaaa',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
 }
 
 .overlay {
@@ -52,6 +56,9 @@ li {
     background: -ms-linear-gradient(top, rgba(255,255,255,0) 0%,rgba(255,255,255,0.11) 32%,rgba(255,255,255,0.88) 69%,rgba(255,255,255,0.88) 100%); /* IE10+ */
     background: linear-gradient(to bottom, rgba(255,255,255,0) 0%,rgba(255,255,255,0.11) 32%,rgba(255,255,255,0.88) 69%,rgba(255,255,255,0.88) 100%); /* W3C */
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00ffffff', endColorstr='#e0ffffff',GradientType=0 ); /* IE6-9 */
+}
+#microsofthealth .overlay{
+    background: rgba(255,255,255,0.9); /* Old browsers */
 }
 
 /*HOME */
@@ -149,11 +156,11 @@ li {
     height: 100%;
 }
 
-#plex .latest img {
-    width:20%;
-    height:30vw;
-    float:left;
-}
+    #plex .latest img {
+        width: 20%;
+        height: 30vw;
+        float: left;
+    }
 
 #plex .deck {
     position: absolute;
@@ -161,12 +168,13 @@ li {
     left: 2%;
     width: 100%;
 }
-#plex .deck img {
-    width:13%;
-    margin-right:1%;
-    height:20vw;
-    float:left;
-}
+
+    #plex .deck img {
+        width: 13%;
+        margin-right: 1%;
+        height: 20vw;
+        float: left;
+    }
 
 /* STRAVA */
 #strava .goal {
@@ -286,7 +294,7 @@ li {
 }
 
 
-
+/* SETTINGS */
 #settings .connections-list {
     display: block;
     width: 100%;
@@ -412,50 +420,54 @@ li {
     font-style: normal;
 }
 
+@font-face {
+    font-family: 'Project K Symbol';
+    src: url("../_font/ProjectKSymbolRegular.woff") format("woff");
+    font-weight: normal;
+    font-style: normal;
+}
 
+.temp-icon-back {
+    height: 1em;
+    width: auto;
+    position: relative;
+    top: -5px;
+}
 
 
 /* PROTO.IO ONOFF SWITCH */
 .switch-button-label {
     float: left;
-
     font-size: 10pt;
     cursor: pointer;
 }
 
-.switch-button-label.off {
-    color: #adadad;
-}
+    .switch-button-label.off {
+        color: #adadad;
+    }
 
-.switch-button-label.on {
-    color: #0088CC;
-}
+    .switch-button-label.on {
+        color: #0088CC;
+    }
 
 .switch-button-background {
     float: left;
     position: relative;
-
     background: #ccc;
     border: 1px solid #aaa;
-
     margin: 1px 10px;
-
     -webkit-border-radius: 4px;
     -moz-border-radius: 4px;
     border-radius: 4px;
-
     cursor: pointer;
 }
 
 .switch-button-button {
     position: absolute;
-
     left: -1px;
-    top : -1px;
-
+    top: -1px;
     background: #FAFAFA;
     border: 1px solid #aaa;
-
     -webkit-border-radius: 4px;
     -moz-border-radius: 4px;
     border-radius: 4px;
@@ -466,6 +478,506 @@ li {
 
 
 
+.picon {
+    display: inline;
+    font-family: "Project K Symbol";
+    font-size: inherit;
+    text-rendering: auto;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-style: normal;
+}
+
+    .picon:before {
+        margin-right: .2em;
+    }
+
+    .picon.action-plan:before {
+        content: "";
+    }
+
+    .picon.active-time:before {
+        content: "";
+    }
+
+    .picon.add:before {
+        content: "";
+    }
+
+    .picon.alarm:before {
+        content: "";
+    }
+
+    .picon.arrow-circle-back:before {
+        content: "";
+    }
+
+    .picon.arrow-down:before {
+        content: "";
+    }
+
+    .picon.arrow-left:before {
+        content: "";
+    }
+
+    .picon.arrow-right:before {
+        content: "";
+    }
+
+    .picon.arrow-up:before {
+        content: "";
+    }
+
+    .picon.asleep:before {
+        content: "";
+    }
+
+    .picon.band:before {
+        content: "";
+    }
+
+    .picon.bars:before {
+        content: "";
+    }
+
+    .picon.best:before {
+        content: "";
+    }
+
+    .picon.bike:before {
+        content: "";
+    }
+
+    .picon.build:before {
+        content: "";
+    }
+
+    .picon.bullet:before {
+        content: "";
+    }
+
+    .picon.calculator:before {
+        content: "";
+    }
+
+    .picon.calendar:before {
+        content: "";
+    }
+
+    .picon.calorie:before {
+        content: "";
+    }
+
+    .picon.cancel:before {
+        content: "";
+    }
+
+    .picon.circle:before {
+        content: "";
+    }
+
+    .picon.circle-check:before {
+        content: "";
+    }
+
+    .picon.circle-check-filled:before {
+        content: "";
+    }
+
+    .picon.circuit:before {
+        content: "";
+    }
+
+    .picon.circuit-group:before {
+        content: "";
+    }
+
+    .picon.check:before {
+        content: "";
+    }
+
+    .picon.cheetah:before {
+        content: "";
+    }
+
+    .picon.chevron-down:before {
+        content: "";
+    }
+
+    .picon.chevron-left:before {
+        content: "";
+    }
+
+    .picon.chevron-right:before {
+        content: "";
+    }
+
+    .picon.chevron-right-filled:before {
+        content: "";
+    }
+
+    .picon.chevron-circle-right:before {
+        content: "";
+    }
+
+    .picon.chevron-circle-left:before {
+        content: "";
+    }
+
+    .picon.chevron-circle-double-right:before {
+        content: "";
+    }
+
+    .picon.chevron-circle-double-left:before {
+        content: "";
+    }
+
+    .picon.chevron-down-filled:before {
+        content: "";
+    }
+
+    .picon.chevron-up:before {
+        content: "";
+    }
+
+    .picon.clipboard:before {
+        content: "";
+    }
+
+    .picon.copy:before {
+        content: "";
+    }
+
+    .picon.delete:before {
+        content: "";
+    }
+
+    .picon.delete-2:before {
+        content: "";
+    }
+
+    .picon.duration:before {
+        content: "";
+    }
+
+    .picon.distance:before {
+        content: "";
+    }
+
+    .picon.dropdown-arrow:before {
+        content: "";
+    }
+
+    .picon.edit:before {
+        content: "";
+    }
+
+    .picon.edit-2:before {
+        content: "";
+    }
+
+    .picon.elevation:before {
+        content: "";
+    }
+
+    .picon.email:before {
+        content: "";
+    }
+
+    .picon.exclamation:before {
+        content: "";
+    }
+
+    .picon.expand:before {
+        content: "";
+    }
+
+    .picon.fall-asleep:before {
+        content: "";
+    }
+
+    .picon.favorite:before {
+        content: "";
+    }
+
+    .picon.favorite-filled:before {
+        content: "";
+    }
+
+    .picon.filter:before {
+        content: "";
+    }
+
+    .picon.free-play:before {
+        content: "";
+    }
+
+    .picon.fullscreen-open:before {
+        content: "";
+    }
+
+    .picon.fullscreen-close:before {
+        content: "";
+    }
+
+    .picon.golf:before {
+        content: "";
+    }
+
+    .picon.golf-chart:before {
+        content: "";
+    }
+
+    .picon.golf-auto-shot:before {
+        content: "";
+    }
+
+    .picon.golf-chart:before {
+        content: "";
+    }
+
+    .picon.golf-longest-drive:before {
+        content: "";
+    }
+
+    .picon.golf-par:before {
+        content: "";
+    }
+
+    .picon.guided-workout:before {
+        content: "";
+    }
+
+    .picon.heart-rate:before {
+        content: "";
+    }
+
+    .picon.help:before {
+        content: "";
+    }
+
+    .picon.home:before {
+        content: "";
+    }
+
+    .picon.interval:before {
+        content: "";
+    }
+
+    .picon.list:before {
+        content: "";
+    }
+
+    .picon.manage-workout:before {
+        content: "";
+    }
+
+    .picon.map-marker:before {
+        content: "";
+    }
+
+    .picon.molecule:before {
+        content: "";
+    }
+
+    .picon.non-exercise-activity:before {
+        content: "";
+    }
+
+    .picon.notes:before {
+        content: "";
+    }
+
+    .picon.pace:before {
+        content: "";
+    }
+
+    .picon.play-circle:before {
+        content: "";
+    }
+
+    .picon.plu:before {
+        content: "";
+    }
+
+    .picon.plus:before {
+        content: "";
+    }
+
+    .picon.profile:before {
+        content: "";
+    }
+
+    .picon.recovery-time:before {
+        content: "";
+    }
+
+    .picon.remove:before {
+        content: "";
+    }
+
+    .picon.remove-skinny:before {
+        content: "";
+    }
+
+    .picon.rest:before {
+        content: "";
+    }
+
+    .picon.run:before {
+        content: "";
+    }
+
+    .picon.search:before {
+        content: "";
+    }
+
+    .picon.save:before {
+        content: "";
+    }
+
+    .picon.save-2:before {
+        content: "";
+    }
+
+    .picon.schedule:before {
+        content: "";
+    }
+
+    .picon.share:before {
+        content: "";
+    }
+
+    .picon.sleep:before {
+        content: "";
+    }
+
+    .picon.sleep-fat:before {
+        content: "";
+    }
+
+    .picon.sleep-middle:before {
+        content: "";
+    }
+
+    .picon.sleep-low:before {
+        content: "";
+    }
+
+    .picon.sleep-restoration:before {
+        content: "";
+    }
+
+    .picon.slow:before {
+        content: "";
+    }
+
+    .picon.speed:before {
+        content: "";
+    }
+
+    .picon.split:before {
+        content: "";
+    }
+
+    .picon.smoke:before {
+        content: "";
+    }
+
+    .picon.stair:before {
+        content: "";
+    }
+
+    .picon.step:before {
+        content: "";
+    }
+
+    .picon.sync:before {
+        content: "";
+    }
+
+    .picon.sync-next:before {
+        content: "";
+    }
+
+    .picon.training-effect:before {
+        content: "";
+    }
+
+    .picon.time:before {
+        content: "";
+    }
+
+    .picon.info-tooltip:before {
+        content: "";
+    }
+
+    .picon.trophy:before {
+        content: "";
+    }
+
+    .picon.uv:before {
+        content: "";
+    }
+
+    .picon.vo2-max:before {
+        content: "";
+    }
+
+    .picon.wokeup:before {
+        content: "";
+    }
+
+    .picon.workout:before {
+        content: "";
+    }
+
+    .picon.x:before {
+        content: "";
+    }
+
+
+
+.rbc-label-start {
+    font-family: "Project K Symbol";
+    font-size: 15px;
+    fill: white;
+}
+
+.rbc-center-text {
+    fill: black;
+    font-family: 'Helvetica Neue Thin';
+}
+
+.rbc-center-text-line1 {
+    font-family: 'Helvetica Neue';
+}
+
+.rbc-center-text-line0 {
+    font-size: 95px;
+}
+
+.rbc-center-text-line1 {
+    font-size: 20px;
+}
+.rbc-center-text-line2,  .rbc-center-text-line3 {
+    font-size: 15px;
+}
+
+
+
+.smallchart .rbc-center-text {
+    fill: black;
+    font-family: 'Helvetica Neue Thin';
+}
+
+.smallchart .rbc-center-text-line0 {
+    font-size: 30px;
+}
+
+.smallchart .rbc-center-text-line1 {
+    font-size: 12px;
+}
 
 
 
@@ -473,49 +985,63 @@ li {
 
 
 
- #microsofthealth {
-            text-align: center;
-        }
+.nvd3 .nv-multibar .nv-groups rect,
+.nvd3 .nv-multibarHorizontal .nv-groups rect,
+.nvd3 .nv-candlestickBar .nv-ticks rect,
+.nvd3 .nv-discretebar .nv-groups rect, .nvd3.nv-stackedarea path.nv-area {
+    fill-opacity: 1;
+}
 
-            #microsofthealth .chart {
-                display: inline-block;
-                padding: 20px;
-            }
+.nvd3 .nv-axis line {
+    fill: none;
+    stroke: none;
+}
 
-        .rbc-label-start {
-            font-family: fontawesome;
-            font-weight: bold;
-            font-size: 15px;
-            fill: white;
-        }
-
-        .rbc-center-text {
-            fill: black;
-            font-family: 'Helvetica Neue Thin';
-        }
-
-        .rbc-center-text-line1 {
-            font-family: 'Helvetica Neue';
-        }
-
-        .rbc-center-text-line0 {
-            font-size: 95px;
-        }
-
-        .rbc-center-text-line1 {
-            font-size: 20px;
-        }
+.nvd3 .nv-axis .tick text {
+    margin-top: 10px;
+}
 
 
-        .smallchart .rbc-center-text {
-            fill: black;
-            font-family: 'Helvetica Neue Thin';
-        }
+#microsofthealth {
+    text-align: center;
+}
 
-        .smallchart .rbc-center-text-line0 {
-            font-size: 30px;
-        }
+#microsofthealth .today {
+    position: absolute;
+    top: 2%;
+    left: 2%;
+    width:100%;
+}
 
-        .smallchart .rbc-center-text-line1 {
-            font-size: 12px;
-        }
+    #microsofthealth .chart {
+        float:left;
+        width:30%;
+        padding: 1%;
+    }
+#microsofthealth .dailies .chart{
+        width:22%;
+}
+#microsofthealth .dailies {
+    position: absolute;
+    bottom: 2%;
+    left: 2%;
+        width:100%;
+
+}
+
+#microsofthealth .title {
+    font-family: 'HelveticaNeue-Extended';
+    text-align: left;
+    max-width: 90%;
+    overflow: hidden;
+    white-space: nowrap;
+    font-size: 2.5vmin;
+}
+
+#microsofthealth .chart svg {
+    margin-top: 1%;
+}
+
+.nvd3.nv-bullet .nv-range:hover, .nvd3.nv-stackedarea path.nv-area {
+    fill-opacity: 1 !important;
+}

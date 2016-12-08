@@ -8,11 +8,11 @@ var Strava = function (opts) {
         speedConversion: 2.23693629, //mph
         climbConversion: 3.2808399, //ft
         distanceGoal: 50, //goal
-        clientId: 0, // strava API clientId
+        clientId: '', // strava API clientId
         clientSecret: '',
         urlAuth: 'https://www.strava.com/oauth/authorize?client_id={client_id}&response_type=code&redirect_uri={redirect_uri}&state=strava&approval_prompt=force',
         urlRedirect: window.location.protocol + "//" + window.location.host + window.location.pathname,
-        urlToken: 'https://www.strava.com/oauth/token',
+        urlToken: 'https://www.strava.com/oauth/token?client_id={client_id}&client_secret={client_secret}&code={code}',
         urlDeAuth: 'https://www.strava.com/oauth/deauthorize'
     }, opts);
 
@@ -32,7 +32,7 @@ Strava.prototype.init = function () {
             callback: self.update.bind(self),
             tokenStorage: 'stravaAccessToken',
             urlAuth: options.urlAuth.replace("{client_id}", options.clientId).replace("{client_secret}", options.clientSecret).replace("{redirect_uri}", encodeURIComponent(options.urlRedirect)),
-            urlToken: options.urlToken.replace("{client_id}", options.clientId).replace("{client_secret}", options.clientSecret).replace("{redirect_uri}", encodeURIComponent(options.urlRedirect)),
+            urlToken: options.urlToken.replace("{client_id}", options.clientId).replace("{client_secret}", options.clientSecret),
             deAuthCallback: self.goodbye.bind(self),
             displayNameStorage: 'stravaUser'
         }
