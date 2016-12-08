@@ -3,7 +3,7 @@
 var Plex = function (opts) {
     this.options = {};
     //this._resetOptions();
-    this.options = $.extend(opts, {
+    this.options = $.extend({
         container: $('#plex'),
         serverName: 'Dave Media',
         username: '',
@@ -13,7 +13,7 @@ var Plex = function (opts) {
         urlAuth: 'https://plex.tv/users/sign_in.xml',
         urlServer: 'https://plex.tv/pms/servers.xml',
         tokenStorage: 'plexAccesstoken'
-    });
+    }, opts);
 
     this.plexHeaders = {
         'X-Plex-Client-Identifier': guid(),
@@ -103,7 +103,7 @@ Plex.prototype.update = function () {
                             if (data2._children) {
                                 $.each(data2._children, function () {
                                     latestContainer.append(
-                                        $('<img>').attr('src', "http://86.149.106.32:18587" + this.thumb + "?X-Plex-Token=" + self.token())
+                                        $('<img>').attr('src', "http://" + serverAddress + ":" + serverPort + this.thumb + "?X-Plex-Token=" + self.token())
                                         );
                                 });
                             };
@@ -125,7 +125,7 @@ Plex.prototype.update = function () {
                             if (data2._children) {
                                 $.each(data2._children, function () {
                                     deckContainer.append(
-                                        $('<img>').attr('src', "http://86.149.106.32:18587" + (this.parentThumb || this.thumb) + "?X-Plex-Token=" + self.token())
+                                        $('<img>').attr('src', "http://" + serverAddress + ":" + serverPort + (this.parentThumb || this.thumb) + "?X-Plex-Token=" + self.token())
                                     );
                                 });
                             };

@@ -222,7 +222,7 @@ RadialProgressChart.prototype.update = function (data) {
 
     // calculate from percentage and new percentage for the progress animation
     self.options.series.forEach(function (item) {
-        console.log(item);
+        //console.log(item);
         item.fromPercentage = item.percentage ? item.percentage : 5;
         item.percentage = (item.value - self.options.min) * 100 / ((item.max || self.options.max) - self.options.min);
     });
@@ -257,7 +257,7 @@ RadialProgressChart.prototype.update = function (data) {
                     .selectAll('tspan')
                     .each(function () {
                         if (this.callback) {
-                            d3.select(this).text(this.callback(interpolator(t), item.index, item));
+                            d3.select(this).text(this.callback(interpolator(t), item.index, item, self.options.series));
                         }
                     });
               };

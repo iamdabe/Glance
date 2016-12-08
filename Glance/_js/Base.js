@@ -48,18 +48,18 @@ function init() {
     initFullPage();
     
     _strava = new Strava({
-        clientId: '',
-        clientSecret: '',
+        clientId: '940',
+        clientSecret: 'dfb6c3a088f6e6ffa88ddb14501b3e9f64014c97',
     });
 
     _plex = new Plex({
-        username: '',
-        password: ''
+        username: 'iam@dabe.co.uk',
+        password: 'Neverbeen1'
     });
 
     _microsofthealth = new MicrosoftHealth({
-        clientId: '',
-        clientSecret: '',
+        clientId: '000000004413FC1B',
+        clientSecret: 'JV1trf9QoSC76dnCSeqv7nQN5H9pXP0D',
     });
 
     initCalendar();

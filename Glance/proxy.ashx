@@ -16,8 +16,6 @@ public class Handler : IHttpHandler
 
         string jsonResponse = ProxyRequest(method, url, data, context);
 
-
-
         context.Response.Cache.SetExpires(DateTime.Now);
         context.Response.ContentType = "application/json";
         context.Response.Write(jsonResponse);
@@ -26,7 +24,6 @@ public class Handler : IHttpHandler
 
     private string ProxyRequest(string method, string url, string data, HttpContext context)
     {
-
         System.Net.ServicePointManager.Expect100Continue = false;
         System.Net.HttpWebRequest wr = (HttpWebRequest)HttpWebRequest.Create(url);
         wr.Method = method.ToUpper();
@@ -46,23 +43,12 @@ public class Handler : IHttpHandler
         {
             wr.ContentType = context.Request.ContentType;
             request.ContentType = context.Request.ContentType; //"application/json";
-            //request.MediaType = context.Request.ContentType; // "application/json";
         }
         if (context.Request.AcceptTypes.Length > 0)
         {
             request.Accept = context.Request.AcceptTypes[0]; //"application/json";
         }
-
-        //context.Response.Write(wr.ContentType);
-        //context.Response.End();
-
-        //wr.ContentType = "application/json";
-        //wr.MediaType = "application/json";
-        //wr.Accept = "application/json";
-        //request.ContentType = "application/json";
-        //request.MediaType = "application/json";
-        //request.Accept = "application/json";
-
+        
         if (data.Length > 0)
         {
             // Set the data to send.
@@ -72,7 +58,6 @@ public class Handler : IHttpHandler
                 streamWriter.Write(data);
             }
         }
-
 
         try
         {
@@ -98,22 +83,13 @@ public class Handler : IHttpHandler
                     {
                         string error = reader.ReadToEnd();
                         returndata = error;
-                        //TODO: use JSON.net to parse this string and look at the error message
                     }
                 }
             }
         }
         return returndata;
 
-
-        //// Get the response.
-        //var httpResponse = (HttpWebResponse)wr.GetResponse();
-        //using (var streamReader = new StreamReader(httpResponse.GetResponseStream()))
-        //{
-        //    return streamReader.ReadToEnd();
-        //}
     }
-
 
     public bool IsReusable
     {
